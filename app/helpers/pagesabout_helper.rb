@@ -1,0 +1,2 @@
+module PagesaboutHelper
+end
