@@ -19,14 +19,16 @@ padding-top:15px;
     font-size:20px;
     color:#FFFFFF;
     padding-top:35px;
+    
 }
 
-
-.navbar-brand > img {
-display: block;
-margin-top:-18px;
+.navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
+margin-left: 0px;
 }
 
+.navbar-header > img{
+    margin-top:-5px;
+}
 .navbar-inverse .navbar-brand {
 color: #DEDEDE;
 }
@@ -46,4 +48,7 @@ color: #dedede;
 color: #333333;
 background-color: #FFCC00;
 border-color: #cccccc;
+}
+.navbar-logo{
+    content:url("Lamp50.png");
 }
