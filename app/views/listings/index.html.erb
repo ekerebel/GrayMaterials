@@ -8,7 +8,9 @@
       <th>Description</th>
       <th>Price</th>
       <th>Created By</th>
-      <th>Actions</th>
+      <% if user_signed_in? %>
+        <th>Actions</th>
+      <% end %>
     </tr>
   </thead>
 
@@ -16,7 +18,7 @@
     <% @listings.each do |listing| %>
       <tr>
         <td><%= image_tag listing.image.url(:thumb) %></td>
-        <td><%= listing.name %></td>
+        <td><%= link_to listing.name, listing, class: "btn btn-link" %></td>
         <td><%= listing.description %></td>
         <td><%= listing.price %></td>
         <td>
@@ -24,12 +26,20 @@
             <%= listing.user.name %>
           <% end %>
         </td>
-        <td><%= link_to 'Show', listing, class: "btn btn-link" %>&nbsp;<%= link_to 'Edit', edit_listing_path(listing), class: "btn btn-link" %>&nbsp;<%= link_to 'Destroy', listing, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-link" %></td>
+        <% if user_signed_in? %>
+          <td>
+            <% if listing.user==current_user %>
+              <%= link_to 'Edit', edit_listing_path(listing), class: "btn btn-link" %>
+              <%= link_to 'Destroy', listing, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-link" %>
+            <% end %>
+          </td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Listing', new_listing_path, class: "btn btn-link" %>
+<% if user_signed_in? %>
+  <%= link_to 'New Listing', new_listing_path, class: "btn btn-link" %>
+<% end %>
