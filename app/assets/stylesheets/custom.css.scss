@@ -31,6 +31,10 @@ margin-left: 0px;
 .navbar-header > img{
     margin-top:-5px;
 }
+.navbar-inverse{
+    background-color:#333;
+    border-color:#333;
+}
 .navbar-inverse .navbar-brand {
 color: #DEDEDE;
 }
@@ -52,7 +56,12 @@ background-color: #FFCC00;
 border-color: #cccccc;
 }
 .navbar-logo{
-    content:image-url("Lamp50.png");
+    content:image-url("logo.png");
+}
+
+.navbar-header > img {
+margin-top: -10px;
+margin-right: 60px;
 }
 
 .btn-default {
