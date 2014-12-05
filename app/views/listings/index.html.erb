@@ -14,7 +14,7 @@
   <tbody>
     <% @listings.each do |listing| %>
       <tr>
-        <td></td>
+        <td><%= image_tag listing.image.url(:thumb) %></td>
         <td><%= listing.name %></td>
         <td><%= listing.description %></td>
         <td><%= listing.price %></td>
