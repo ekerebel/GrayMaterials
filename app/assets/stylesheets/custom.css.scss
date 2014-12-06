@@ -50,11 +50,18 @@ body{
 color: #dedede;
 }
 
-.btn-default {
+.btn-primary {
 color: #333333;
 background-color: #FFCC00;
-border-color: #cccccc;
+border-color: #FFCC00;
 }
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary.focus, .btn-primary:active, .btn-primary.active, .open > .btn-primary.dropdown-toggle {
+color: #333333;
+background-color: #CCC;
+border-color: #AAA;
+}
+
 .navbar-logo{
     content:image-url("logo.png");
 }
@@ -64,9 +71,7 @@ margin-top: -10px;
 margin-right: 60px;
 }
 
-.btn-default {
-border-color: #FFCC00;
-}
+
 
 .navbar > .form-group > .form-control{
     border:none;

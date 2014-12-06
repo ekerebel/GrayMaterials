@@ -3,11 +3,11 @@
 <table class="table table-hover">
   <thead>
     <tr>
-      <th>Image</th>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Price</th>
-      <th>Created By</th>
+      <th class="center">Image</th>
+      <th class="center">Name</th>
+      <th class="center">Description</th>
+      <th class="center">Price</th>
+      <th class="center">Created By</th>
     </tr>
   </thead>
 
@@ -17,7 +17,7 @@
         <td><%= image_tag listing.image.url(:thumb) %></td>
         <td><%= link_to listing.name, listing, class: "btn btn-link" %></td>
         <td><%= listing.description %></td>
-        <td><%= listing.price %></td>
+        <td><%=number_to_currency(listing.price) %></td>
         <td>
           <% if listing.user!=nil %>
             <%= listing.user.name %>
@@ -28,7 +28,3 @@
   </tbody>
 </table>
 
-<br>
-<% if user_signed_in? %>
-  <%= link_to 'New Listing', new_listing_path, class: "btn btn-link" %>
-<% end %>
