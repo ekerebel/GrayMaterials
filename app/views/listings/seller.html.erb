@@ -1,4 +1,16 @@
-<h1>Listings</h1>
+<table width="100%">
+  <tr>
+    <td>
+      <h1>Listings</h1>
+    </td>
+    <td align="right">
+      <form action="listings/new">
+        <input type="submit" class="btn btn-primary" value="New Listing">
+      </form>
+    </td>  
+  </tr>
+</table>
+
 
 <table class="table table-hover">
   <thead>
@@ -44,8 +56,3 @@
     <% end %>
   </tbody>
 </table>
-
-<br>
-<% if user_signed_in? %>
-  <%= link_to 'New Listing', new_listing_path, class: "btn btn-link" %>
-<% end %>
