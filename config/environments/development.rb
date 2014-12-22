@@ -37,4 +37,6 @@ Rails.application.configure do
   
   #Required for Devise Gem
   config.action_mailer.default_url_options = { host: 'demo-project-graymaterials.c9.io'}
+  
+  config.action_controller.include_all_helpers = true
 end

@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+
 ruby "2.1.4"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -31,6 +32,7 @@ gem "paperclip", "~> 4.2"
 gem "paperclip-dropbox", ">= 1.1.7"
 gem "figaro"
 gem "devise"
+gem 'stripe', :source => 'https://code.stripe.com'
 
 group :production do
   gem 'pg'

@@ -10,32 +10,73 @@
       </ul>
     </div>
   <% end %>
+  
+  <div class="row">
+  <div class="col-md-4">
+    <div class="thumbnail">
+      <%= image_tag @listing.image.url %>
+    </div>
+    <h3><%= @listing.name %></h3>
+    <h4><%= number_to_currency(@listing.price) %></h4>
+  </div>
+  <div class="col-md-8">
 
-  <div class="field">
-    <%= f.label :address1 %><br>
-    <%= f.text_field :address1 %>
+    <div class="form-group">
+      <%= f.label :quantity %><br>
+      <%= f.number_field :quantity, :value =>1, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :address1 %><br>
+      <%= f.text_field :address1, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :address2 %><br>
+      <%= f.text_field :address2, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :city %><br>
+      <%= f.text_field :city, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-3">
+          <%= f.label :state %><br>
+          <%= select_tag :state, options_for_select(us_states), class: "form-control" %>
+        </div>
+        <div class="col-md-3">
+          <%= f.label :zip_code %><br>
+          <%= f.text_field :zip_code, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-8">
+          <%= label_tag :card_number, "Credit Card Number" %>
+          <%= text_field_tag :card_number, nil, { :name => nil, :'data-stripe' => "number", class: "form-control" } %>
+        </div>
+        <div class="col-md-4">
+          <%= label_tag :card_code, "CVC" %>
+          <%= text_field_tag :card_code, nil, { :name => nil, :'data-stripe' => "cvc", class: "form-control" } %>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= label_tag nil, "Expiration Date" %>
+      <div class="row">
+        <div class="col-md-3">
+          <%= select_month nil, { use_two_digit_numbers: true }, { :name => nil, :'data-stripe' => "exp-month", class: "form-control" } %>
+        </div>
+        <div class="col-md-3">
+          <%= select_year nil, { start_year: Date.today.year, end_year: Date.today.year+10 }, { :name => nil, :'data-stripe' => "exp-year", class: "form-control" } %>
+        </div>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <%= f.submit "Complete Order", class: "btn btn-success" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :address2 %><br>
-    <%= f.text_field :address2 %>
-  </div>
-  <div class="field">
-    <%= f.label :city %><br>
-    <%= f.text_field :city %>
-  </div>
-  <div class="field">
-    <%= f.label :state %><br>
-    <%= f.text_field :state %>
-  </div>
-  <div class="field">
-    <%= f.label :zip_code %><br>
-    <%= f.text_field :zip_code %>
-  </div>
-  <div class="field">
-    <%= f.label :quantity %><br>
-    <%= f.number_field :quantity %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  
 <% end %>

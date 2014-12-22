@@ -78,4 +78,7 @@ Rails.application.configure do
   
   # Required for Devise Gem. remember to Change Localhost 3000 to actual application host
   config.action_mailer.default_url_options = { host: 'graymaterials.herokuapp.com/'}
+  
+  config.action_controller.include_all_helpers = true
+  
 end
