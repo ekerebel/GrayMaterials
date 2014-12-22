@@ -26,7 +26,7 @@ class OrdersController < ApplicationController
     @order.seller_id=@listing.user_id
     if @order.save
       respond_to do |format|
-        format.html {redirect_to orders_url, notice: 'Order was successfully created' }
+        format.html {redirect_to purchases_url, notice: 'Order was successfully created' }
         format.json { head :no_content }
       end
     end
