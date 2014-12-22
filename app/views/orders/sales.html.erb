@@ -1,0 +1,33 @@
+<table width="100%">
+  <tr>
+    <td>
+      <h1>Your Sales History</h1>
+    </td>
+      
+  </tr>
+</table>
+
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th class="center">Image</th>
+      <th class="center">Item</th>
+      <th class="center">Price</th>
+      <th class="center">Customer</th>
+      <th class="center">Date Sold</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= image_tag order.listing.image.url(:thumb) %></td>
+        <td><%= link_to order.listing.name, order.listing, class: "btn btn-link" %></td>
+        <td><%= number_to_currency(order.listing.price) %></td>
+        <td><%= order.buyer.name %></td>
+        <td><%= order.created_at.strftime("%b %-d, %Y") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

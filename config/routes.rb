@@ -1,10 +1,14 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :listings
-
+  resources :listings do
+    resources :orders, only: [:new, :create]
+  end
+  resources :orders
   get 'pages/about'
   get 'pages/contact'
   get 'seller' => "listings#seller"
+  get 'sales' => "orders#sales"
+  get 'purchases' => "orders#purchases"
 
   get 'pagesabout/contact'
 
