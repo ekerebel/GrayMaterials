@@ -1,16 +1,4 @@
 <%= form_for([@listing, @order]) do |f| %>
-  <% if @order.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
-
-      <ul>
-      <% @order.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-  
   <div class="row">
   <div class="col-md-4">
     <div class="thumbnail">
@@ -20,7 +8,21 @@
     <h4><%= number_to_currency(@listing.price) %></h4>
   </div>
   <div class="col-md-8">
-
+    <% if @order.errors.any? %>
+        <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+         <h4><%= pluralize(@order.errors.count, "error") %> prohibited this Order from being saved:</h4>
+         <ul>
+            <% @order.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div id="stripe_error" class="alert alert-danger alert-dismissable" style="display:none">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <noscript>JavaScript is not enabled and is required for this form. First enable it in your web browser.</noscript>
+    </div>
     <div class="form-group">
       <%= f.label :quantity %><br>
       <%= f.number_field :quantity, :value =>1, class: "form-control" %>
@@ -41,7 +43,7 @@
       <div class="row">
         <div class="col-md-3">
           <%= f.label :state %><br>
-          <%= select_tag :state, options_for_select(us_states), class: "form-control" %>
+          <%= select_tag :state, options_for_select(us_states), class: "form-control", name: "order[state]" %>
         </div>
         <div class="col-md-3">
           <%= f.label :zip_code %><br>
