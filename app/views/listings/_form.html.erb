@@ -9,25 +9,60 @@
           <% end %>
       </ul>
     </div>
-      
   <% end %>
-
-  <div class="form-group">
-    <%= f.label :name %><br>
-    <%= f.text_field :name, class: "form-control" %>
+  
+  <div id="stripe_error" class="alert alert-danger alert-dismissable" style="display:none">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <noscript>JavaScript is not enabled and is required for this form. First enable it in your web browser.</noscript>
   </div>
-  <div class="form-group">
-    <%= f.label :description %><br>
-    <%= f.text_area :description, class: "form-control" %>
+  
+  <div class="row">
+    <% if current_user.recipient.blank? %>
+      <div class="col-md-5">
+    <% else %>
+      <div class="col-md-10">
+    <% end %>
+      <h2>New listing</h1>
+      <div class="form-group">
+        <%= f.label :name %><br>
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :description %><br>
+        <%= f.text_area :description, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :price %><br>
+        <%= f.text_field :price, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :image %><br>
+        <%= f.file_field :image, class: "form-control" %>
+      </div>
+    </div>
+    <% if current_user.recipient.blank? %>
+      <div class="col-md-5">
+        <h2>Bank Account Information</h1>
+        <div class="form-group">
+          <%= label_tag :company_name %>
+          <%= text_field_tag :company_name, nil, class: "form-control" %>
+        </div>
+        
+        <%= hidden_field_tag :country, 'US', {:'data-stripe' => "country"} %>
+  
+        <div class="form-group">
+          <%= label_tag :routing_number %>
+          <%= text_field_tag :routing_number, nil, { :name => nil, :'data-stripe' => "routingNumber", class: "form-control" } %>
+        </div>
+        <div class="form-group">
+          <%= label_tag :account_number %>
+          <%= text_field_tag :account_number, nil, { :name => nil, :'data-stripe' => "accountNumber", class: "form-control" } %>
+        </div>
+      </div>
+    <% end %>
   </div>
-  <div class="form-group">
-    <%= f.label :price %><br>
-    <%= f.text_field :price, class: "form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :image %><br>
-    <%= f.file_field :image, class: "form-control" %>
-  </div>
+  
+  
   <div class="form-group">
     <%= f.submit class: "btn btn-primary" %>
   </div>
