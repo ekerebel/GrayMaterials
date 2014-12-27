@@ -9,5 +9,6 @@ class ChangeColumnsOfListings5 < ActiveRecord::Migration
     change_column :listings, :C, :decimal, :precision => 15, :scale => 5
     change_column :listings, :weight, :decimal, :precision => 15, :scale => 5
     change_column :listings, :minimum_weight, :decimal, :precision => 15, :scale => 5
+    
   end
 end
