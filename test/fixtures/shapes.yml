@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  A: false
+  B: false
+  C: false
+  thickness: false
+  width: false
+  length: false
+
+two:
+  name: MyString
+  A: false
+  B: false
+  C: false
+  thickness: false
+  width: false
+  length: false

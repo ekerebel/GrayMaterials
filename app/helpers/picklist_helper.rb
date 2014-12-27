@@ -56,4 +56,13 @@ def us_states
     ['Wyoming', 'WY']
   ]
 end
+
+def materials
+  [
+    ['Aluminum', 'Aluminum'],
+    ['Steel', 'Steel'],
+    ['Stainless', 'Stainless']
+  ]
+end
+
 end

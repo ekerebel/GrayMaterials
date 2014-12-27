@@ -11,7 +11,6 @@
 <table class="table table-hover">
   <thead>
     <tr>
-      <th class="center">Image</th>
       <th class="center">Item</th>
       <th class="center">Price</th>
       <th class="center">Seller</th>
@@ -22,7 +21,6 @@
   <tbody>
     <% @orders.each do |order| %>
       <tr>
-        <td><%= image_tag order.listing.image.url(:thumb) %></td>
         <td><%= link_to order.listing.name, order.listing, class: "btn btn-link" %></td>
         <td><%= number_to_currency(order.listing.price) %></td>
         <td><%= order.seller.name %></td>

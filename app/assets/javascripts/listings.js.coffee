@@ -1,11 +1,10 @@
 jQuery ->
   Stripe.setPublishableKey($('meta[name="stripe-key"]').attr('content'))
   listing.setupForm()
-
 listing =
   setupForm: ->
     $('#new_listing').submit ->
-        if $('input').length > 6
+        if $('#from_date').val()?
             $('input[type=submit]').attr('disabled', true)
             Stripe.bankAccount.createToken($('#new_listing'), listing.handleStripeResponse)
             false

@@ -1,0 +1,41 @@
+<h1>Listing shapes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Image</th>
+      <th>Name</th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>Diameter</th>
+      <th>Thickness</th>
+      <th>Width</th>
+      <th>Length</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @shapes.each do |shape| %>
+      <tr>
+        <td><%= image_tag shape.image.url(:thumb) %></td>
+        <td><%= shape.name %></td>
+        <td><%= shape.A %></td>
+        <td><%= shape.B %></td>
+        <td><%= shape.C %></td>
+        <td><%= shape.diameter %></td>
+        <td><%= shape.thickness %></td>
+        <td><%= shape.width %></td>
+        <td><%= shape.length %></td>
+        <td><%= link_to 'Show', shape %></td>
+        <td><%= link_to 'Edit', edit_shape_path(shape) %></td>
+        <td><%= link_to 'Destroy', shape, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Shape', new_shape_path %>

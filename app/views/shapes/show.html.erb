@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @shape.name %>
+</p>
+
+<p>
+  <strong>A:</strong>
+  <%= @shape.A %>
+</p>
+
+<p>
+  <strong>B:</strong>
+  <%= @shape.B %>
+</p>
+
+<p>
+  <strong>C:</strong>
+  <%= @shape.C %>
+</p>
+
+<p>
+  <strong>Thickness:</strong>
+  <%= @shape.thickness %>
+</p>
+
+<p>
+  <strong>Diameter:</strong>
+  <%= @shape.diameter %>
+</p>
+
+<p>
+  <strong>Width:</strong>
+  <%= @shape.width %>
+</p>
+
+<p>
+  <strong>Length:</strong>
+  <%= @shape.length %>
+</p>
+
+<%= link_to 'Edit', edit_shape_path(@shape) %> |
+<%= link_to 'Back', shapes_path %>

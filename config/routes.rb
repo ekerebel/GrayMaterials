@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :shapes
+
   devise_for :users
   resources :listings do
     resources :orders, only: [:new, :create]
@@ -11,6 +13,7 @@ Rails.application.routes.draw do
   get 'purchases' => "orders#purchases"
 
   get 'pagesabout/contact'
+  get 'listing/update_form', as: 'update_form'
 
   root 'listings#index'
   

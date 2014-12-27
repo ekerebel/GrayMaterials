@@ -1,0 +1,52 @@
+<%= form_for(@shape) do |f| %>
+  <% if @shape.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@shape.errors.count, "error") %> prohibited this shape from being saved:</h2>
+
+      <ul>
+      <% @shape.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :A %><br>
+    <%= f.check_box :A %>
+  </div>
+  <div class="field">
+    <%= f.label :B %><br>
+    <%= f.check_box :B %>
+  </div>
+  <div class="field">
+    <%= f.label :C %><br>
+    <%= f.check_box :C %>
+  </div>
+  <div class="field">
+    <%= f.label :diameter %><br>
+    <%= f.check_box :diameter %>
+  </div>
+  <div class="field">
+    <%= f.label :thickness %><br>
+    <%= f.check_box :thickness %>
+  </div>
+  <div class="field">
+    <%= f.label :width %><br>
+    <%= f.check_box :width %>
+  </div>
+  <div class="field">
+    <%= f.label :length %><br>
+    <%= f.check_box :length %>
+  </div>
+  <div class="field">
+    <%= f.file_field :image, class: "form-control" %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

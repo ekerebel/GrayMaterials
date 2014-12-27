@@ -1,4 +1,48 @@
-<%= form_for(@listing, :html => { :multipart => true }) do |f| %>
+<script language="javascript">
+function changeShape(){
+  shape_id = document.getElementById('shapes_select').value;
+  <% Shape.all.each do |shape| %>
+    if (shape_id==<%= shape.id%>){
+      if (<%=shape.A%>){
+        document.getElementById('A').style.display = 'block';
+      }else{
+        document.getElementById('A').style.display = 'none';
+      }
+      if (<%=shape.B%>){
+        document.getElementById('B').style.display = 'block';
+      }else{
+        document.getElementById('B').style.display = 'none';
+      }
+      if (<%=shape.C%>){
+        document.getElementById('C').style.display = 'block';
+      }else{
+        document.getElementById('C').style.display = 'none';
+      }
+      if (<%=shape.diameter%>){
+        document.getElementById('diameter').style.display = 'block';
+      }else{
+        document.getElementById('diameter').style.display = 'none';
+      }
+      if (<%=shape.thickness%>){
+        document.getElementById('thickness').style.display = 'block';
+      }else{
+        document.getElementById('thickness').style.display = 'none';
+      }
+      if (<%=shape.width%>){
+        document.getElementById('width').style.display = 'block';
+      }else{
+        document.getElementById('width').style.display = 'none';
+      }
+      if (<%=shape.length%>){
+        document.getElementById('length').style.display = 'block';
+      }else{
+        document.getElementById('length').style.display = 'none';
+      }
+    }
+  <% end %>
+}
+</script>
+<%= form_for(@listing, :html => { :multipart => true, :onload => "changeShape()" }) do |f| %>
   <% if @listing.errors.any? %>
       <div class="alert alert-danger alert-dismissable">
       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -15,30 +59,148 @@
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
     <noscript>JavaScript is not enabled and is required for this form. First enable it in your web browser.</noscript>
   </div>
-  
+  <div class="row">
+    <div class="col-md-5">
+      <h2>New listing</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-5">
+      <div class="form-group">
+          <%= f.label :Material %><br>
+          <%= select_tag :material, options_for_select(materials), class: "form-control", name: "listing[material]" %>
+      </div>
+      <div class="form-group" id="grade">
+        <%= f.label :grade %><br>
+        <%= f.text_field :grade, class: "form-control" %>
+      </div>
+      <div class="form-group" id="specification">
+        <%= f.label :specification %><br>
+        <%= f.text_field :specification, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :price %><br>
+        <div class="input-group">
+          <div class="input-group-addon">$</div>
+          <%= f.text_field :price, class: "form-control"%>
+        </div>
+        </div>
+        <div class="form-group">
+            <%= f.label :inventory %><br>
+            <%= f.text_field :inventory, class: "form-control" %>
+        </div>
+    </div>
+    <div class="col-md-5">
+      <div class="form-group">
+        <%= f.label :shape_id %><br>
+        <%= f.collection_select :shape_id, Shape.all, :id, :name, {prompt: "Choose a Shape"}, {class: "form-control", id: "shapes_select", onchange: "changeShape()"} %>
+      </div>
+      <div class="form-group">
+        <%= f.label :fixed_dimensions %>
+        <% if @listing.fixed_dimensions? %>
+        <input type="checkbox" id="listing_fixed_dimensions" name="listing[fixed_dimensions]" checked data-toggle="toggle">
+        <% else %>
+        <input type="checkbox" id="listing_fixed_dimensions" name="listing[fixed_dimensions]"  data-toggle="toggle">
+        <% end %>
+      </div>
+      <% if @listing.shape_id? && @listing.shape.A %>
+        <div class="form-group" id="A">
+      <% else %>
+        <div class="form-group" id="A" style="display:none">
+      <% end %>
+        <div class="input-group">
+          <div class="input-group-addon"><%= f.label :A %></div>
+          <%= f.text_field :A, class: "form-control"%>
+          <div class="input-group-addon">in</div>
+        </div>
+      </div>
+      <% if @listing.shape_id? && @listing.shape.B %>
+        <div class="form-group" id="B">
+      <% else %>
+        <div class="form-group" id="B" style="display:none">
+      <% end %>
+        <div class="input-group">
+          <div class="input-group-addon"><%= f.label :B %></div>
+          <%= f.text_field :B, class: "form-control"%>
+          <div class="input-group-addon">in</div>
+        </div>
+      </div>
+      <% if @listing.shape_id? && @listing.shape.C %>
+        <div class="form-group" id="C">
+      <% else %>
+        <div class="form-group" id="C" style="display:none">
+      <% end %>
+        <div class="input-group">
+          <div class="input-group-addon"><%= f.label :C %></div>
+          <%= f.text_field :C, class: "form-control"%>
+          <div class="input-group-addon">in</div>
+        </div>
+      </div>
+      <% if @listing.shape_id? && @listing.shape.thickness %>
+        <div class="form-group" id="thickness">
+      <% else %>
+        <div class="form-group" id="thickness" style="display:none">
+      <% end %>
+        <div class="input-group">
+          <div class="input-group-addon"><%= f.label :thickness %></div>
+          <%= f.text_field :thickness, class: "form-control"%>
+          <div class="input-group-addon">in</div>
+        </div>
+      </div>
+      <% if @listing.shape_id? && @listing.shape.diameter %>
+        <div class="form-group" id="diameter">
+      <% else %>
+        <div class="form-group" id="diameter" style="display:none">
+      <% end %>
+        <div class="input-group">
+          <div class="input-group-addon"><%= f.label :diameter %></div>
+          <%= f.text_field :diameter, class: "form-control"%>
+          <div class="input-group-addon">in</div>
+        </div>
+      </div>
+      <% if @listing.shape_id? && @listing.shape.width %>
+        <div class="form-group" id="width">
+      <% else %>
+        <div class="form-group" id="width" style="display:none">
+      <% end %>
+        <div class="input-group">
+          <div class="input-group-addon"><%= f.label :width %></div>
+          <%= f.text_field :width, class: "form-control"%>
+          <div class="input-group-addon">in</div>
+        </div>
+      </div>
+      <% if @listing.shape_id? && @listing.shape.length %>
+        <div class="form-group" id="length">
+      <% else %>
+        <div class="form-group" id="length" style="display:none">
+      <% end %>
+        <div class="input-group">
+          <div class="input-group-addon"><%= f.label :length %></div>
+          <%= f.text_field :length, class: "form-control"%>
+          <div class="input-group-addon">in</div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="row">
     <% if current_user.recipient.blank? %>
       <div class="col-md-5">
     <% else %>
       <div class="col-md-10">
     <% end %>
-      <h2>New listing</h1>
-      <div class="form-group">
-        <%= f.label :name %><br>
-        <%= f.text_field :name, class: "form-control" %>
-      </div>
-      <div class="form-group">
+    <div class="form-group">
         <%= f.label :description %><br>
         <%= f.text_area :description, class: "form-control" %>
-      </div>
-      <div class="form-group">
-        <%= f.label :price %><br>
-        <%= f.text_field :price, class: "form-control" %>
-      </div>
-      <div class="form-group">
+    </div>
+    <div class="form-group">
+        <%= f.label :SKU %><br>
+        <%= f.text_field :SKU, class: "form-control" %>
+    </div>
+    
+    <div class="form-group">
         <%= f.label :image %><br>
         <%= f.file_field :image, class: "form-control" %>
-      </div>
+    </div>
     </div>
     <% if current_user.recipient.blank? %>
       <div class="col-md-5">

@@ -14,7 +14,13 @@
   <tbody>
     <% @listings.each do |listing| %>
       <tr>
-        <td><%= image_tag listing.image.url(:thumb) %></td>
+        <% if listing.image? %>
+          <td><%= image_tag listing.image.url(:thumb) %></td>
+        <% else %>
+          <% if listing.shape_id?%>
+            <td><%= image_tag listing.shape.image.url(:thumb) %></td>
+          <% end %>
+        <% end %>
         <td><%= link_to listing.name, listing, class: "btn btn-link" %></td>
         <td><%= listing.description %></td>
         <td><%=number_to_currency(listing.price) %></td>
