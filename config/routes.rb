@@ -1,10 +1,19 @@
 Rails.application.routes.draw do
+  resources :grades
+
+  resources :materials
+
   resources :shapes
 
   devise_for :users
+  
   resources :listings do
+    
     resources :orders, only: [:new, :create]
   end
+  
+  match 'listings/update_grade_select/:id', :controller=>'listings', :via => [:get], :action => 'update_grade_select'
+  
   resources :orders
   get 'pages/about'
   get 'pages/contact'

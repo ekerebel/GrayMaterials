@@ -71,7 +71,11 @@ class ListingsController < ApplicationController
     end
   end
   
-
+  #Method for updating Grades based on Material
+  def update_grade_select
+    @grades= Grade.where(:material_id => params[:id])
+    render :partial => "grades", :locals => {:grades => @grades}
+  end
 
   # DELETE /listings/1
   # DELETE /listings/1.json
@@ -91,7 +95,7 @@ class ListingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def listing_params
-      params.require(:listing).permit(:name, :description, :price, :image, :shape_id, :SKU, :A, :B, :C, :diameter, :thickness, :width, :length, :grade, :material, :specification, :inventory, :fixed_dimensions, :weight, :minimum_quantity, :maximum_width, :maximum_length)
+      params.require(:listing).permit(:name, :description, :price, :image, :shape_id, :SKU, :A, :B, :C, :diameter, :thickness, :width, :length, :grade_id, :material_id, :specification, :inventory, :fixed_dimensions, :weight, :minimum_quantity, :maximum_width, :maximum_length)
     end
     
     def check_user

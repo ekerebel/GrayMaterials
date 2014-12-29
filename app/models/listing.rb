@@ -9,13 +9,15 @@ class Listing < ActiveRecord::Base
           :path=>":style/:id_:filename"
         validates_attachment_content_type :image, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
     end
-    validates :inventory, :price, :shape_id, :material, presence:true  
+    validates :inventory, :price, :shape_id, :material_id, presence:true  
     validates :price, numericality: {greater_than:0}
     before_update :formatName
     before_create :formatName
     
     belongs_to :user
     belongs_to :shape
+    belongs_to :material
+    belongs_to :grade
     has_many :orders
     
     validates_presence_of :length, :if => :shape_length?
@@ -74,10 +76,10 @@ class Listing < ActiveRecord::Base
         myName=myName[2..99]
         
         
-        if grade?
-            myName = material + ' ' + grade + ' ' + shape.name + ' ' + myName
+        if grade_id?
+            myName = grade.name + ' ' + material.name + ' ' + shape.name + ' ' + myName
         else
-            myName = material + ' ' + shape.name + ' ' + myName
+            myName = material.name + ' ' + shape.name + ' ' + myName
         end
         
         self.name=myName
