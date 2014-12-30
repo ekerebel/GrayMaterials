@@ -28,8 +28,20 @@
     <%= f.check_box :C %>
   </div>
   <div class="field">
-    <%= f.label :diameter %><br>
-    <%= f.check_box :diameter %>
+    <%= f.label :D %><br>
+    <%= f.check_box :D %>
+  </div>
+  <div class="field">
+    <%= f.label :OD %><br>
+    <%= f.check_box :OD %>
+  </div>
+  <div class="field">
+    <%= f.label :wall %><br>
+    <%= f.check_box :wall %>
+  </div>
+  <div class="field">
+    <%= f.label :ID %><br>
+    <%= f.check_box :dimension_ID %>
   </div>
   <div class="field">
     <%= f.label :thickness %><br>
@@ -40,8 +52,20 @@
     <%= f.check_box :width %>
   </div>
   <div class="field">
+    <%= f.label :maximumwidth %><br>
+    <%= f.check_box :maximum_width %>
+  </div>
+  <div class="field">
     <%= f.label :length %><br>
     <%= f.check_box :length %>
+  </div>
+  <div class="field">
+    <%= f.label :maximum_length %><br>
+    <%= f.check_box :maximum_length %>
+  </div>
+  <div class="field">
+    <%= f.label :volume_formula %><br>
+    <%= f.text_area :volume_formula %>
   </div>
   <div class="field">
     <%= f.file_field :image, class: "form-control" %>

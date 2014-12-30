@@ -1,0 +1,126 @@
+<% if !@shape && @listing.shape%>
+   <% @shape=@listing.shape %>
+   <% if @listing.fixed_dimensions%>
+       <% fixed_dimensions = 'true' %>
+    <% else %>
+        <% fixed_dimensions = 'false' %>
+    <% end %>
+<% end %>
+<% if @shape %>
+    <%= hidden_field :listing, :volume_formula, value: @shape.volume_formula%>
+    <% if @shape.A %>
+        <div class="form-group" id="A">
+            <div class="input-group">
+              <div class="input-group-addon">A</div>
+                 <%= text_field :listing, :A, class: "form-control" %>
+              <div class="input-group-addon">in</div>
+            </div>
+        </div>
+    <% end %>
+    <% if @shape.B %>
+        <div class="form-group" id="B">
+            <div class="input-group">
+              <div class="input-group-addon">B</div>
+                 <%= text_field :listing, :B, class: "form-control" %>
+              <div class="input-group-addon">in</div>
+            </div>
+        </div>
+    <% end %>
+    <% if @shape.C %>
+        <div class="form-group" id="C">
+            <div class="input-group">
+              <div class="input-group-addon">C</div>
+                 <%= text_field :listing, :C, class: "form-control" %>
+              <div class="input-group-addon">in</div>
+            </div>
+        </div>
+    <% end %>
+    <% if @shape.D %>
+        <div class="form-group" id="D">
+            <div class="input-group">
+              <div class="input-group-addon">D</div>
+                 <%= text_field :listing, :D, class: "form-control" %>
+              <div class="input-group-addon">in</div>
+            </div>
+        </div>
+    <% end %>
+    <% if @shape.OD %>
+        <div class="form-group" id="OD">
+            <div class="input-group">
+              <div class="input-group-addon">OD</div>
+                 <%= text_field :listing, :OD, class: "form-control" %>
+              <div class="input-group-addon">in</div>
+            </div>
+        </div>
+    <% end %>
+    <% if @shape.wall %>
+        <div class="form-group" id="wall">
+            <div class="input-group">
+              <div class="input-group-addon">Wall</div>
+                 <%= text_field :listing, :wall, class: "form-control" %>
+              <div class="input-group-addon">in</div>
+            </div>
+        </div>
+    <% end %>
+    <% if @shape.dimension_ID %>
+        <div class="form-group" id="dimension_ID">
+            <div class="input-group">
+              <div class="input-group-addon">ID</div>
+                 <%= text_field :listing, :dimension_ID, class: "form-control" %>
+              <div class="input-group-addon">in</div>
+            </div>
+        </div>
+    <% end %>
+    <% if @shape.thickness %>
+        <div class="form-group" id="thickness">
+            <div class="input-group">
+              <div class="input-group-addon">Thickness</div>
+                 <%= text_field :listing, :thickness, class: "form-control" %>
+              <div class="input-group-addon">in</div>
+            </div>
+        </div>
+    <% end %>
+    <% if @shape.width %>
+        <div class="form-group" id="width">
+            <div class="input-group">
+              <div class="input-group-addon">Width</div>
+                 <%= text_field :listing, :width, class: "form-control" %>
+              <div class="input-group-addon">in</div>
+            </div>
+        </div>
+    <% end %>
+    <% if fixed_dimensions=='false' %>
+        <% if @shape.maximum_width %>
+            <div class="form-group" id="maximum_width">
+                <div class="input-group">
+                  <div class="input-group-addon">Max Width</div>
+                     <%= text_field :listing, :maximum_width, class: "form-control" %>
+                  <div class="input-group-addon">in</div>
+                </div>
+            </div>
+        <% end %>
+    <% end %>
+     <% if @shape.length %>
+        <div class="form-group" id="length">
+            <div class="input-group">
+              <div class="input-group-addon">Length</div>
+                 <%= text_field :listing, :length, class: "form-control" %>
+              <div class="input-group-addon">in</div>
+            </div>
+        </div>
+    <% end %>
+    <% if fixed_dimensions=='false' %>
+        <% if @shape.maximum_length %>
+            <div class="form-group" id="maximum_width">
+                <div class="input-group">
+                  <div class="input-group-addon">Max Length</div>
+                     <%= text_field :listing, :maximum_length, class: "form-control" %>
+                  <div class="input-group-addon">in</div>
+                </div>
+            </div>
+        <% end %>
+    <% else %>
+    <% end %>
+    
+    
+<% end %>

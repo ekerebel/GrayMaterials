@@ -1,5 +1,5 @@
 <% if !@grades.blank? %>
-    <%= collection_select :grade, :id, @grades, :id, :name, {prompt: "Choose a Grade"}, {class: "form-control", id: "grade_select"} %>
+    <%= collection_select :listing, :grade_id, @grades, :id, :name, {prompt: "Choose a Grade"}, {class: "form-control", id: "grade_select"} %>
 <% else %>
-    <%= collection_select :grade, :id, Grade.all, :id, :name, {prompt: "Choose a Grade"}, {class: "form-control", id: "grade_select"} %>
+    <%= collection_select :listing, :grade_id, Grade.all, :id, :name, {prompt: "Choose a Grade"}, {class: "form-control", id: "grade_select"} %>
 <% end %>

@@ -25,6 +25,7 @@ class ListingsController < ApplicationController
   
   # GET /listings/1/edit
   def edit
+
   end
 
   # POST /listings
@@ -32,19 +33,7 @@ class ListingsController < ApplicationController
   def create
     @listing = Listing.new(listing_params)
     @listing.user_id = current_user.id
-    if current_user.recipient.blank?
-      Stripe.api_key = ENV["STRIPE_API_KEY"]
-      token = params[:stripeToken]
-  
-      recipient = Stripe::Recipient.create(
-        :name => params[:company_name],
-        :type => "corporation",
-        :bank_account => token
-        )
-  
-      current_user.recipient = recipient.id
-      current_user.save
-    end
+    
     
     respond_to do |format|
       if @listing.save
@@ -74,7 +63,12 @@ class ListingsController < ApplicationController
   #Method for updating Grades based on Material
   def update_grade_select
     @grades= Grade.where(:material_id => params[:id])
-    render :partial => "grades", :locals => {:grades => @grades}
+    render :partial => "grades"
+  end
+  
+  def update_shape_select
+    @shape= Shape.find(params[:shape])
+    render :partial =>  "dimensions", locals: {fixed_dimensions: params[:fixed_dimensions]} 
   end
 
   # DELETE /listings/1
@@ -95,7 +89,7 @@ class ListingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def listing_params
-      params.require(:listing).permit(:name, :description, :price, :image, :shape_id, :SKU, :A, :B, :C, :diameter, :thickness, :width, :length, :grade_id, :material_id, :specification, :inventory, :fixed_dimensions, :weight, :minimum_quantity, :maximum_width, :maximum_length)
+      params.require(:listing).permit(:name, :account_id, :description, :price, :image, :shape_id, :SKU, :A, :B, :C, :D, :OD, :wall, :dimension_ID, :thickness, :width, :length, :grade_id, :material_id, :specification, :inventory, :fixed_dimensions, :weight, :minimum_quantity, :maximum_width, :maximum_length)
     end
     
     def check_user

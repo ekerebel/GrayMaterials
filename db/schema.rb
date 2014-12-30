@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141228234117) do
+ActiveRecord::Schema.define(version: 20141230031649) do
+
+  create_table "accounts", force: true do |t|
+    t.text     "name"
+    t.text     "recipient"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
+  end
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -49,7 +57,7 @@ ActiveRecord::Schema.define(version: 20141228234117) do
     t.decimal  "A",                  precision: 15, scale: 5
     t.decimal  "B",                  precision: 15, scale: 5
     t.decimal  "C",                  precision: 15, scale: 5
-    t.decimal  "diameter",           precision: 15, scale: 5
+    t.decimal  "D",                  precision: 15, scale: 5
     t.decimal  "thickness",          precision: 15, scale: 5
     t.decimal  "width",              precision: 15, scale: 5
     t.decimal  "length",             precision: 15, scale: 5
@@ -62,6 +70,10 @@ ActiveRecord::Schema.define(version: 20141228234117) do
     t.boolean  "fixed_dimensions",                            default: true
     t.integer  "material_id"
     t.integer  "grade_id"
+    t.decimal  "OD",                 precision: 15, scale: 5
+    t.decimal  "wall",               precision: 15, scale: 5
+    t.decimal  "dimension_ID",       precision: 15, scale: 5
+    t.integer  "account_id"
   end
 
   create_table "materials", force: true do |t|
@@ -98,7 +110,13 @@ ActiveRecord::Schema.define(version: 20141228234117) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
-    t.boolean  "diameter"
+    t.boolean  "D"
+    t.boolean  "OD"
+    t.boolean  "wall"
+    t.boolean  "dimension_ID"
+    t.boolean  "maximum_width"
+    t.boolean  "maximum_length"
+    t.text     "volume_formula"
   end
 
   create_table "users", force: true do |t|
@@ -115,7 +133,6 @@ ActiveRecord::Schema.define(version: 20141228234117) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
-    t.string   "recipient"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

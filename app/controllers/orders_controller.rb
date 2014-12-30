@@ -41,7 +41,7 @@ class OrdersController < ApplicationController
     transfer = Stripe::Transfer.create(
       :amount => (@listing.price * 95 -2.9*@listing.price).floor,
       :currency => "usd",
-      :recipient => @listing.user.recipient
+      :recipient => @listing.account.recipient
       )
     
     if @order.save

@@ -42,6 +42,6 @@ class ShapesController < ApplicationController
     end
 
     def shape_params
-      params.require(:shape).permit(:name, :A, :B, :C, :diameter, :thickness, :width, :length, :image)
+      params.require(:shape).permit(:name, :A, :B, :C, :D, :OD, :wall, :dimension_ID, :thickness, :width, :maximum_width, :length, :maximum_length, :image, :volume_formula)
     end
 end

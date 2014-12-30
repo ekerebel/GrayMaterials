@@ -10,82 +10,44 @@ jQuery(function($) {
     })
     return false;
   });
-
+  
+  $("#shape_id,#listing_fixed_dimensions").change(function() {
+    // make a POST call and replace the content
+    var shape = $('select#shape_id :selected').val();
+    var fixed_dimensions= document.getElementById('listing_fixed_dimensions').checked;
+    if(shape == "") shape="0";
+    jQuery.get('/listings/update_shape_select/' + shape + '/' + fixed_dimensions , function(data){
+        $("#dimensions").html(data);
+    })
+    return false;
+  });
+  
+  $("#listing_A,#listing_B,#listing_C,#listing_D,#listing_OD,#listing_wall,#listing_dimension_ID,#listing_thickness,#listing_width,#listing_length").change(function() {
+    if($('#listing_fixed_dimensions').is(':checked')){
+      alert('fixed');
+      var volume_formula = $('#listing_volume_formula').val();
+      var A = $('#listing_A').val();
+      var B = $('#listing_B').val();
+      var C = $('#listing_C').val();
+      var D = $('#listing_D').val();
+      var OD = $('#listing_OD').val();
+      var wall = $('#listing_wall').val();
+      var ID = $('#listing_dimension_ID').val();
+      var thickness = $('#listing_thickness').val();
+      var width = $('#listing_width').val();
+      var length = $('#listing_length').val();
+      var volume = eval(volume_formula);
+      alert(volume_formula+': '+volume);
+    }
+    
+  });
+  
+  
+  
 })
 
-function changeShape(){
-  shape_id = document.getElementById('shapes_select').value;
-  fixed_dimensions= document.getElementById('listing_fixed_dimensions').checked;
-  <% Shape.all.each do |shape| %>
-    if (shape_id==<%= shape.id%>){
-      if (<%=shape.A%>){
-        document.getElementById('A').style.display = 'block';
-      }else{
-        document.getElementById('A').style.display = 'none';
-      }
-      if (<%=shape.B%>){
-        document.getElementById('B').style.display = 'block';
-      }else{
-        document.getElementById('B').style.display = 'none';
-      }
-      if (<%=shape.C%>){
-        document.getElementById('C').style.display = 'block';
-      }else{
-        document.getElementById('C').style.display = 'none';
-      }
-      if (<%=shape.diameter%>){
-        document.getElementById('diameter').style.display = 'block';
-      }else{
-        document.getElementById('diameter').style.display = 'none';
-      }
-      if (<%=shape.thickness%>){
-        document.getElementById('thickness').style.display = 'block';
-      }else{
-        document.getElementById('thickness').style.display = 'none';
-      }
-      if (<%=shape.width%>){
-        document.getElementById('width').style.display = 'block';
-        if('<%=shape.name%>'=='Plate' || '<%=shape.name%>'=='Sheet'){
-          if (fixed_dimensions==true){
-            document.getElementById('maximum_width').style.display = 'none';
-            document.getElementById('width_label').innerHTML = 'Width';
-          }else{
-            document.getElementById('maximum_width').style.display = 'block';
-            document.getElementById('width_label').innerHTML = 'Min Width';
-          }
-        }else{
-          document.getElementById('maximum_width').style.display = 'none';
-          document.getElementById('width_label').innerHTML = 'Width';
-        }
-      }else{
-        document.getElementById('width').style.display = 'none';
-        document.getElementById('maximum_width').style.display = 'none';
-      }
-      if (<%=shape.length%>){
-        document.getElementById('length').style.display = 'block';
-        if (fixed_dimensions==true){
-          document.getElementById('maximum_length').style.display = 'none';
-          document.getElementById('length_label').innerHTML = 'Length';
-        }else{
-          document.getElementById('maximum_length').style.display = 'block';
-          document.getElementById('length_label').innerHTML = 'Min Length';
-        }
-      }else{
-        document.getElementById('length').style.display = 'none';
-        document.getElementById('maximum_length').style.display = 'none';
-      }
-      if (fixed_dimensions==true){
-        document.getElementById('price_label').innerHTML = 'per Unit';
-        document.getElementById('min_label').innerHTML = 'Units';
-        
-      }else{
-        document.getElementById('price_label').innerHTML = 'per lb';
-        document.getElementById('min_label').innerHTML = 'lbs';
-      }
-    }
-  <% end %>
-}
 </script>
+
 <%= form_for(@listing, :html => { :multipart => true}) do |f| %>
   <% if @listing.errors.any? %>
       <div class="alert alert-danger alert-dismissable">
@@ -99,15 +61,12 @@ function changeShape(){
     </div>
   <% end %>
   
-  <div id="stripe_error" class="alert alert-danger alert-dismissable" style="display:none">
-    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-    <noscript>JavaScript is not enabled and is required for this form. First enable it in your web browser.</noscript>
-  </div>
+  
   <div class="row">
     <div class="col-md-5">
       <div class="form-group">
         <%= f.label :dimensions_type %>
-       <%= f.check_box :fixed_dimensions, {class: "form-control", onchange: "changeShape()"} %>
+        <%= f.check_box :fixed_dimensions, {class: "form-control"} %>
         <script>
         $(function() {
           $('#listing_fixed_dimensions').bootstrapToggle({
@@ -153,18 +112,16 @@ function changeShape(){
               </div>
             </div>
         </div>
-        
-      
     </div>
     <div class="col-md-5">
       <div class="form-group">
-          <%= f.label :Material_id %><br>
+          <%= f.label :material_id %><br>
           <%= f.collection_select :material_id, Material.all, :id, :name, {prompt: "Choose a Material"}, {class: "form-control", id: "material_select"} %>
       </div>
       
       
         <div class="form-group">
-          <%= f.label :Grade_id %><br>
+          <%= f.label :grade_id %><br>
           <div id="grades">
             <%= render :partial => 'grades' %>
           </div>
@@ -176,120 +133,15 @@ function changeShape(){
       </div>
         <div class="form-group">
           <%= f.label :shape_id %><br>
-          <%= f.collection_select :shape_id, Shape.all, :id, :name, {prompt: "Choose a Shape"}, {class: "form-control", id: "shapes_select", onchange: "changeShape()"} %>
+          <%= f.collection_select :shape_id, Shape.all, :id, :name, {prompt: "Choose a Shape"}, {class: "form-control", id: "shape_id"} %>
         </div>
-      
-      
-      
-      
-      
-      <% if @listing.shape_id? && @listing.shape.A %>
-        <div class="form-group" id="A">
-      <% else %>
-        <div class="form-group" id="A" style="display:none">
-      <% end %>
-        <div class="input-group">
-          <div class="input-group-addon"><%= f.label :A %></div>
-          <%= f.text_field :A, class: "form-control"%>
-          <div class="input-group-addon">in</div>
+        <div id="dimensions">
+          <%= render :partial => 'dimensions' %>
         </div>
-      </div>
-      <% if @listing.shape_id? && @listing.shape.B %>
-        <div class="form-group" id="B">
-      <% else %>
-        <div class="form-group" id="B" style="display:none">
-      <% end %>
-        <div class="input-group">
-          <div class="input-group-addon"><%= f.label :B %></div>
-          <%= f.text_field :B, class: "form-control"%>
-          <div class="input-group-addon">in</div>
-        </div>
-      </div>
-      <% if @listing.shape_id? && @listing.shape.C %>
-        <div class="form-group" id="C">
-      <% else %>
-        <div class="form-group" id="C" style="display:none">
-      <% end %>
-        <div class="input-group">
-          <div class="input-group-addon"><%= f.label :C %></div>
-          <%= f.text_field :C, class: "form-control"%>
-          <div class="input-group-addon">in</div>
-        </div>
-      </div>
-      <% if @listing.shape_id? && @listing.shape.thickness %>
-        <div class="form-group" id="thickness">
-      <% else %>
-        <div class="form-group" id="thickness" style="display:none">
-      <% end %>
-        <div class="input-group">
-          <div class="input-group-addon"><%= f.label :thickness %></div>
-          <%= f.text_field :thickness, class: "form-control"%>
-          <div class="input-group-addon">in</div>
-        </div>
-      </div>
-      <% if @listing.shape_id? && @listing.shape.diameter %>
-        <div class="form-group" id="diameter">
-      <% else %>
-        <div class="form-group" id="diameter" style="display:none">
-      <% end %>
-        <div class="input-group">
-          <div class="input-group-addon"><%= f.label :diameter %></div>
-          <%= f.text_field :diameter, class: "form-control"%>
-          <div class="input-group-addon">in</div>
-        </div>
-      </div>
-      <% if @listing.shape_id? && @listing.shape.width %>
-        <div class="form-group" id="width">
-      <% else %>
-        <div class="form-group" id="width" style="display:none">
-      <% end %>
-        <div class="input-group">
-          <div class="input-group-addon"><label id="width_label"><% if !@listing.fixed_dimensions && (@listing.shape.name=='Plate' || @listing.shape.name=='Sheet')%>Min <% end %>Width</label></div>
-          <%= f.text_field :width, class: "form-control"%>
-          <div class="input-group-addon">in</div>
-        </div>
-      </div>
-      <% if @listing.shape_id? && @listing.shape.length && !@listing.fixed_dimensions && (@listing.shape.name=='Plate' || @listing.shape.name=='Sheet') %>
-        <div class="form-group" id="maximum_width">
-      <% else %>
-        <div class="form-group" id="maximum_width" style="display:none">
-      <% end %>
-        <div class="input-group">
-          <div class="input-group-addon"><%= f.label :max_width %></div>
-          <%= f.text_field :maximum_width, class: "form-control"%>
-          <div class="input-group-addon">in</div>
-        </div>
-      </div>
-      <% if @listing.shape_id? && @listing.shape.length %>
-        <div class="form-group" id="length">
-      <% else %>
-        <div class="form-group" id="length" style="display:none">
-      <% end %>
-        <div class="input-group">
-          <div class="input-group-addon"><label id="length_label"><% if !@listing.fixed_dimensions %>Min <% end %>Length</label></div>
-          <%= f.text_field :length, class: "form-control"%>
-          <div class="input-group-addon">in</div>
-        </div>
-      </div>
-      <% if @listing.shape_id? && @listing.shape.length && !@listing.fixed_dimensions %>
-        <div class="form-group" id="maximum_length">
-      <% else %>
-        <div class="form-group" id="maximum_length" style="display:none">
-      <% end %>
-        <div class="input-group">
-          <div class="input-group-addon"><%= f.label :max_length %></div>
-          <%= f.text_field :maximum_length, class: "form-control"%>
-          <div class="input-group-addon">in</div>
-        </div>
-      </div>
-    </div>
+     </div> 
   </div>
   <div class="row">
-    <% if current_user.recipient.blank? %>
-      <div class="col-md-5">
-    <% else %>
-      <div class="col-md-10">
-    <% end %>
+    <div class="col-md-10">
     <div class="form-group">
         <%= f.label :description %><br>
         <%= f.text_area :description, class: "form-control" %>
@@ -303,31 +155,16 @@ function changeShape(){
         <%= f.label :image %><br>
         <%= f.file_field :image, class: "form-control" %>
     </div>
+    <div class="form-group">
+          <%= f.label :account_id %><br>
+          <%= f.collection_select :account_id, Account.where(:user_id => current_user), :id, :name, {prompt: "Choose a Seller Account"}, {class: "form-control", id: "account_select"} %>
     </div>
-    <% if current_user.recipient.blank? %>
-      <div class="col-md-5">
-        <h2>Bank Account Information</h1>
-        <div class="form-group">
-          <%= label_tag :company_name %>
-          <%= text_field_tag :company_name, nil, class: "form-control" %>
-        </div>
-        
-        <%= hidden_field_tag :country, 'US', {:'data-stripe' => "country"} %>
-  
-        <div class="form-group">
-          <%= label_tag :routing_number %>
-          <%= text_field_tag :routing_number, nil, { :name => nil, :'data-stripe' => "routingNumber", class: "form-control" } %>
-        </div>
-        <div class="form-group">
-          <%= label_tag :account_number %>
-          <%= text_field_tag :account_number, nil, { :name => nil, :'data-stripe' => "accountNumber", class: "form-control" } %>
-        </div>
-      </div>
-    <% end %>
+    <div class="form-group">
+      <%= f.submit class: "btn btn-primary" %>
+    </div>
   </div>
   
   
-  <div class="form-group">
-    <%= f.submit class: "btn btn-primary" %>
+  
   </div>
 <% end %>

@@ -9,32 +9,39 @@ class Listing < ActiveRecord::Base
           :path=>":style/:id_:filename"
         validates_attachment_content_type :image, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
     end
-    validates :inventory, :price, :shape_id, :material_id, presence:true  
+    validates :inventory, :price, :shape_id, :material_id, :grade_id, presence:true  
     validates :price, numericality: {greater_than:0}
     before_update :formatName
     before_create :formatName
     
     belongs_to :user
+    belongs_to :account
     belongs_to :shape
     belongs_to :material
     belongs_to :grade
     has_many :orders
     
+    validates_presence_of :account_id
+    
     validates_presence_of :length, :if => :shape_length?
     validates_presence_of :width, :if => :shape_width?
-    validates_presence_of :diameter, :if => :shape_diameter?
+    validates_presence_of :D, :if => :shape_D?
     validates_presence_of :thickness, :if => :shape_thickness?
     validates_presence_of :A, :if => :shape_A?
     validates_presence_of :B, :if => :shape_B?
     validates_presence_of :C, :if => :shape_C?
+    validates_presence_of :OD, :if => :shape_OD?
+    validates_presence_of :wall, :if => :shape_wall?
+    validates_presence_of :dimension_ID, :if => :shape_dimension_ID?
+    
     def shape_length?
         shape.length
     end
     def shape_width?
         shape.width
     end
-    def shape_diameter?
-        shape.diameter
+    def shape_D?
+        shape.D
     end
     def shape_thickness?
         shape.thickness
@@ -48,30 +55,48 @@ class Listing < ActiveRecord::Base
     def shape_C?
         shape.C
     end
+    def shape_OD?
+        shape.OD
+    end
+    def shape_wall?
+        shape.wall
+    end
+    def shape_dimension_ID?
+        shape.dimension_ID
+    end
     
     
     def formatName
         myName=''
         if thickness?
-            myName=myName + ' X '+formatMeasure(thickness)
+            myName=myName + ' x '+formatMeasure(thickness)+'"'
         end
         if A?
-            myName=myName + ' X '+formatMeasure(self.A)
+            myName=myName + ' x '+formatMeasure(self.A)+'" A'
         end
         if B?
-            myName=myName + ' X '+formatMeasure(self.B)
+            myName=myName + ' x '+formatMeasure(self.B)+'" B'
         end
         if C?
-            myName=myName + ' X '+formatMeasure(self.C)
+            myName=myName + ' x '+formatMeasure(self.C)+'" C'
         end
-        if diameter?
-            myName=myName + ' X '+formatMeasure(diameter)
+        if D?
+            myName=myName + ' x '+formatMeasure(self.D)+'"'
+        end
+        if OD?
+            myName=myName + ' x '+formatMeasure(self.OD)+'" OD'
+        end
+        if wall?
+            myName=myName + ' x '+formatMeasure(wall)+'" WALL'
+        end
+        if dimension_ID?
+            myName=myName + ' x '+formatMeasure(dimension_ID)+'" ID'
         end
         if width?
-            myName=myName + ' X '+formatMeasure(width)
+            myName=myName + ' x '+formatMeasure(width)+'"'
         end
         if length?
-            myName=myName + ' X '+formatMeasure(length)
+            myName=myName + ' x '+formatMeasure(length)+'"'
         end
         myName=myName[2..99]
         
@@ -99,9 +124,8 @@ class Listing < ActiveRecord::Base
                 myMeasure=measure.to_s
             end
         else
-            myMeasure=measure.to_s
+            myMeasure=measure.to_i.to_s
         end
-        #myMeasure=myMeasure+'"'
         return myMeasure
     end
     

@@ -1,0 +1,43 @@
+<%= form_for(@account, :html => { :multipart => true}) do |f| %>
+  <% if @account.errors.any? %>
+      <div class="alert alert-danger alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+       <h4><%= pluralize(@account.errors.count, "error") %> prohibited this account from being saved:</h4>
+       <ul>
+          <% @listing.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div id="stripe_error" class="alert alert-danger" style="display:none">
+    <noscript>JavaScript is not enabled and is required for this form. First enable it in your web browser settings.</noscript>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :name %><br>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+  
+
+  <div class="form-group">
+          <%= label_tag :company_name %>
+          <%= text_field_tag :company_name, nil, class: "form-control" %>
+  </div>
+        
+  <%= hidden_field_tag :country, 'US', {:'data-stripe' => "country"} %>
+  
+  <div class="form-group">
+          <%= label_tag :routing_number %>
+          <%= text_field_tag :routing_number, nil, { :name => nil, :'data-stripe' => "routingNumber", class: "form-control" } %>
+  </div>
+  <div class="form-group">
+          <%= label_tag :account_number %>
+          <%= text_field_tag :account_number, nil, { :name => nil, :'data-stripe' => "accountNumber", class: "form-control" } %>
+  </div>
+  
+  <div class="form-group">
+      <%= f.submit class: "btn btn-primary" %>
+  </div>
+  
+<% end %>

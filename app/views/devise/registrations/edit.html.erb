@@ -1,36 +1,60 @@
 <h2>Edit <%= resource_name.to_s.humanize %></h2>
-
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= devise_error_messages! %>
-
-  <div class="form-group">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true, class:"form-control" %>
+  <div id="stripe_error" class="alert alert-danger alert-dismissable" style="display:none">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <noscript>JavaScript is not enabled and is required for this form. First enable it in your web browser.</noscript>
   </div>
+  <div class="row">
+    <div class="col-md-5">
+      <div class="form-group">
+        <%= f.label :name %><br />
+        <%= f.text_field :name, autofocus: true, class:"form-control" %>
+      </div>
+      
+      <div class="form-group">
+        <%= f.label :email %><br />
+        <%= f.email_field :email, autofocus: true, class:"form-control" %>
+      </div>
+    
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <% end %>
+    
+      <div class="form-group">
+        <%= f.label :password %> <i>(leave blank if you don't want to change it)</i>
+        <%= f.password_field :password, autocomplete: "off", class:"form-control" %>
+      </div>
+    
+      <div class="form-group">
+        <%= f.label :password_confirmation %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "off", class:"form-control" %>
+      </div>
+    
+      <div class="form-group">
+        <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i>
+        <%= f.password_field :current_password, autocomplete: "off", class:"form-control" %>
+      </div>
+    </div>
+    <div class="col-md-5">
+        <h2>Change your Bank Account Information</h1>
+        <div class="form-group">
+          <%= label_tag :company_name %>
+          <%= text_field_tag :company_name, nil, class: "form-control" %>
+        </div>
+        
+        <%= hidden_field_tag :country, 'US', {:'data-stripe' => "country"} %>
   
-  <div class="form-group">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, class:"form-control" %>
-  </div>
-
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
-
-  <div class="form-group">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i>
-    <%= f.password_field :password, autocomplete: "off", class:"form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off", class:"form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i>
-    <%= f.password_field :current_password, autocomplete: "off", class:"form-control" %>
-  </div>
+        <div class="form-group">
+          <%= label_tag :routing_number %>
+          <%= text_field_tag :routing_number, nil, { :name => nil, :'data-stripe' => "routingNumber", class: "form-control" } %>
+        </div>
+        <div class="form-group">
+          <%= label_tag :account_number %>
+          <%= text_field_tag :account_number, nil, { :name => nil, :'data-stripe' => "accountNumber", class: "form-control" } %>
+        </div>
+      </div>
+    </div>
 
   <div class="form-group">
     <%= f.submit "Update", class:"btn btn-primary" %>
