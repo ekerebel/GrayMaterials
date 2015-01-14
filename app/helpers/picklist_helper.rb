@@ -65,4 +65,12 @@ def materials
   ]
 end
 
+def conditions
+  [
+    ['Good', 'Good'],
+    ['Acceptable', 'Acceptable'],
+    ['Poor', 'Poor']
+  ]
+end
+
 end

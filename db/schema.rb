@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141230212829) do
+ActiveRecord::Schema.define(version: 20150114164205) do
 
   create_table "accounts", force: true do |t|
     t.text     "name"
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 20141230212829) do
   create_table "listings", force: true do |t|
     t.string   "name"
     t.text     "description"
-    t.decimal  "price",              precision: 16, scale: 2
+    t.decimal  "price",               precision: 16, scale: 2
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image_file_name"
@@ -59,26 +59,31 @@ ActiveRecord::Schema.define(version: 20141230212829) do
     t.integer  "user_id"
     t.integer  "shape_id"
     t.text     "SKU"
-    t.decimal  "A",                  precision: 15, scale: 5
-    t.decimal  "B",                  precision: 15, scale: 5
-    t.decimal  "C",                  precision: 15, scale: 5
-    t.decimal  "D",                  precision: 15, scale: 5
-    t.decimal  "thickness",          precision: 15, scale: 5
-    t.decimal  "width",              precision: 15, scale: 5
-    t.decimal  "length",             precision: 15, scale: 5
+    t.decimal  "A",                   precision: 15, scale: 5
+    t.decimal  "B",                   precision: 15, scale: 5
+    t.decimal  "C",                   precision: 15, scale: 5
+    t.decimal  "D",                   precision: 15, scale: 5
+    t.decimal  "thickness",           precision: 15, scale: 5
+    t.decimal  "width",               precision: 15, scale: 5
+    t.decimal  "length",              precision: 15, scale: 5
     t.text     "specification"
-    t.integer  "inventory",                                   default: 1
-    t.decimal  "weight",             precision: 15, scale: 5
-    t.decimal  "minimum_quantity",   precision: 15, scale: 5
-    t.decimal  "maximum_width",      precision: 15, scale: 5
-    t.decimal  "maximum_length",     precision: 15, scale: 5
-    t.boolean  "fixed_dimensions",                            default: true
+    t.integer  "inventory",                                    default: 1
+    t.decimal  "weight",              precision: 15, scale: 5
+    t.decimal  "minimum_quantity",    precision: 15, scale: 5
+    t.decimal  "maximum_width",       precision: 15, scale: 5
+    t.decimal  "maximum_length",      precision: 15, scale: 5
+    t.boolean  "fixed_dimensions",                             default: true
     t.integer  "material_id"
     t.integer  "grade_id"
-    t.decimal  "OD",                 precision: 15, scale: 5
-    t.decimal  "wall",               precision: 15, scale: 5
-    t.decimal  "dimension_ID",       precision: 15, scale: 5
+    t.decimal  "OD",                  precision: 15, scale: 5
+    t.decimal  "wall",                precision: 15, scale: 5
+    t.decimal  "dimension_ID",        precision: 15, scale: 5
     t.integer  "account_id"
+    t.string   "dimensions_decimals"
+    t.string   "dimensins_fractions"
+    t.string   "condition"
+    t.decimal  "price_per_lb",        precision: 15, scale: 5
+    t.boolean  "mill_test_report"
   end
 
   create_table "materials", force: true do |t|
@@ -99,6 +104,7 @@ ActiveRecord::Schema.define(version: 20141230212829) do
     t.integer  "listing_id"
     t.integer  "buyer_id"
     t.integer  "seller_id"
+    t.decimal  "rating",                precision: 10, scale: 0
   end
 
   create_table "shapes", force: true do |t|
