@@ -4,7 +4,7 @@
       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
        <h4><%= pluralize(@account.errors.count, "error") %> prohibited this account from being saved:</h4>
        <ul>
-          <% @listing.errors.full_messages.each do |message| %>
+          <% @account.errors.full_messages.each do |message| %>
             <li><%= message %></li>
           <% end %>
       </ul>
@@ -13,31 +13,71 @@
   <div id="stripe_error" class="alert alert-danger" style="display:none">
     <noscript>JavaScript is not enabled and is required for this form. First enable it in your web browser settings.</noscript>
   </div>
-
-  <div class="form-group">
-    <%= f.label :name %><br>
-    <%= f.text_field :name, class: "form-control" %>
+  
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Name & Address</h3>
+    </div>
+    <div class="panel-body">
+      <div class="form-group">
+        <%= f.label :name %><br>
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :address1 %><br>
+        <%= f.text_field :address1, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :address2 %><br>
+        <%= f.text_field :address2, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :city %><br>
+        <%= f.text_field :city, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-3">
+            <%= f.label :state %><br>
+            <%= select_tag :state, options_for_select(us_states), class: "form-control", name: "account[state]" %>
+          </div>
+          <div class="col-md-3">
+            <%= f.label :zip_code %><br>
+            <%= f.text_field :zip_code, class: "form-control" %>
+          </div>
+        </div>
+      </div>
+      
+    </div>
   </div>
   
-
-  <div class="form-group">
+  
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Bank Transfer</h3>
+    </div>
+    <div class="panel-body">
+      <div class="form-group">
           <%= label_tag :company_name %>
           <%= text_field_tag :company_name, nil, class: "form-control" %>
+      </div>
+            
+      <%= hidden_field_tag :country, 'US', {:'data-stripe' => "country"} %>
+      
+      <div class="form-group">
+              <%= label_tag :routing_number %>
+              <%= text_field_tag :routing_number, nil, { :name => nil, :'data-stripe' => "routingNumber", class: "form-control" } %>
+      </div>
+      <div class="form-group">
+              <%= label_tag :account_number %>
+              <%= text_field_tag :account_number, nil, { :name => nil, :'data-stripe' => "accountNumber", class: "form-control" } %>
+      </div>
+      
+      
+    </div>
   </div>
-        
-  <%= hidden_field_tag :country, 'US', {:'data-stripe' => "country"} %>
-  
   <div class="form-group">
-          <%= label_tag :routing_number %>
-          <%= text_field_tag :routing_number, nil, { :name => nil, :'data-stripe' => "routingNumber", class: "form-control" } %>
-  </div>
-  <div class="form-group">
-          <%= label_tag :account_number %>
-          <%= text_field_tag :account_number, nil, { :name => nil, :'data-stripe' => "accountNumber", class: "form-control" } %>
-  </div>
-  
-  <div class="form-group">
-      <%= f.submit class: "btn btn-primary" %>
+    <%= f.submit class: "btn btn-primary" %>
   </div>
   
 <% end %>

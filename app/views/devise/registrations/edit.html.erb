@@ -36,25 +36,7 @@
         <%= f.password_field :current_password, autocomplete: "off", class:"form-control" %>
       </div>
     </div>
-    <div class="col-md-5">
-        <h2>Change your Bank Account Information</h1>
-        <div class="form-group">
-          <%= label_tag :company_name %>
-          <%= text_field_tag :company_name, nil, class: "form-control" %>
-        </div>
-        
-        <%= hidden_field_tag :country, 'US', {:'data-stripe' => "country"} %>
-  
-        <div class="form-group">
-          <%= label_tag :routing_number %>
-          <%= text_field_tag :routing_number, nil, { :name => nil, :'data-stripe' => "routingNumber", class: "form-control" } %>
-        </div>
-        <div class="form-group">
-          <%= label_tag :account_number %>
-          <%= text_field_tag :account_number, nil, { :name => nil, :'data-stripe' => "accountNumber", class: "form-control" } %>
-        </div>
-      </div>
-    </div>
+    
 
   <div class="form-group">
     <%= f.submit "Update", class:"btn btn-primary" %>

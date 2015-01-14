@@ -1,36 +1,22 @@
 <h1>Listings</h1>
-
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th class="center">Image</th>
-      <th class="center">Name</th>
-      <th class="center">Description</th>
-      <th class="center">Price</th>
-      <th class="center">Created By</th>
-    </tr>
-  </thead>
-
-  <tbody>
     <% @listings.each do |listing| %>
-      <tr>
-        <% if listing.image? %>
-          <td><%= image_tag listing.image.url(:thumb) %></td>
-        <% else %>
-          <% if listing.shape_id?%>
-            <td><%= image_tag listing.shape.image.url(:thumb) %></td>
-          <% end %>
-        <% end %>
-        <td><%= link_to listing.name, listing, class: "btn btn-link" %></td>
-        <td><%= listing.description %></td>
-        <td><%=number_to_currency(listing.price) %></td>
-        <td>
-          <% if listing.user!=nil %>
-            <%= listing.user.name %>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+        <div class="media">
+          <div class="media-left">
+            <% if listing.image? %>
+              <%= image_tag listing.image.url(:thumb) %></td>
+            <% else %>
+              <% if listing.shape_id?%>
+                <%= image_tag listing.shape.image.url(:thumb) %>
+              <% end %>
+            <% end %>
+          </div>
+          <div class="media-body">
+            <%= link_to listing.name, listing, class: "btn btn-link", align: "left" %>
+          </div>
+          <div class="media-right">
+            <%=number_to_currency(listing.price) %>
+          </div>
+        </div>
+      <% end %>
+
 

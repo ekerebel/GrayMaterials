@@ -63,7 +63,7 @@ class AccountsController < ApplicationController
     end
 
     def account_params
-      params.require(:account).permit(:name, :recipient)
+      params.require(:account).permit(:name, :recipient, :address1, :address2, :city, :zip_code, :state)
     end
     
     def check_user

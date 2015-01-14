@@ -6,10 +6,13 @@
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "https://js.stripe.com/v2/" %>
   <link href="https://gitcdn.github.io/bootstrap-toggle/2.1.0/css/bootstrap-toggle.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Karla' rel='stylesheet' type='text/css'>
   <script src="https://gitcdn.github.io/bootstrap-toggle/2.1.0/js/bootstrap-toggle.min.js"></script>
   <%= csrf_meta_tags %>
   <%= tag :meta, :name => "stripe-key", :content => ENV["STRIPE_PUBLIC_KEY"] %>
   <link rel="icon"  type="image/png" href="https://www.dropbox.com/s/3flbjlygues5ahl/Lamp16.png?dl=0">
+  <link rel="icon" type="image/ico"  href="favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
   
