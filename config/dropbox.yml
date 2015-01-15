@@ -6,9 +6,10 @@
 #user_id: "24650941"
 #access_type: "app_folder"
 
-app_key: "z2fv4efiy2l4vug"
+#dropbox - public
+app_key: "pxu7nvi8g9vfffe"
 app_secret: <%= ENV["APP_SECRET"] %>
-access_token: "dcek89mlcj76joex"
+access_token: "owxjhbk4f1yd5pl4"
 access_token_secret: <%= ENV["ACCESS_TOKEN_SECRET"]%>
 user_id: "24650941"
 access_type: "dropbox"
