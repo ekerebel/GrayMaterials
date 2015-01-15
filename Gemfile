@@ -30,7 +30,7 @@ gem 'spring',        group: :development
 #Gems manually added in tutorial
 gem 'bootstrap-sass', '~> 3.3.1'
 gem "paperclip", "~> 4.2"
-gem "paperclip-dropbox", ">= 1.3.0"
+gem "paperclip-dropbox", "= 1.3.0"
 gem "figaro"
 gem "devise"
 gem 'stripe'
