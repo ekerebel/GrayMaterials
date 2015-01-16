@@ -70,6 +70,12 @@ class ListingsController < ApplicationController
     @shape= Shape.find(params[:shape])
     render :partial =>  "dimensions", locals: {fixed_dimensions: params[:fixed_dimensions]} 
   end
+  
+  def update_shape_image
+    @shape= Shape.find(params[:shape])
+    render :partial =>  "shapeimg"
+  end
+  
 
   # DELETE /listings/1
   # DELETE /listings/1.json

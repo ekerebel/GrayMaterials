@@ -1,0 +1,6 @@
+<% if !@shape && @listing.shape%>
+   <% @shape=@listing.shape %>
+<% end %>  
+<% if @shape %>
+    <%= image_tag @shape.image.url(:thumb) %>
+<% end %>

@@ -1,6 +1,6 @@
 <script language="javascript">
+
 jQuery(function($) {
-  // when the #country field changes
   $("#material_select").change(function() {
     // make a POST call and replace the content
     var material = $('select#material_select :selected').val();
@@ -19,26 +19,58 @@ jQuery(function($) {
     jQuery.get('/listings/update_shape_select/' + shape + '/' + fixed_dimensions , function(data){
         $("#dimensions").html(data);
     })
+    jQuery.get('/listings/update_shape_image/' + shape + '/' + fixed_dimensions , function(data){
+        $("#shapeimg").html(data);
+    })
     return false;
   });
   
-  $("#listing_A,#listing_B,#listing_C,#listing_D,#listing_OD,#listing_wall,#listing_dimension_ID,#listing_thickness,#listing_width,#listing_length").change(function() {
-    if($('#listing_fixed_dimensions').is(':checked')){
-      alert('fixed');
-      var volume_formula = $('#listing_volume_formula').val();
-      var A = $('#listing_A').val();
-      var B = $('#listing_B').val();
-      var C = $('#listing_C').val();
-      var D = $('#listing_D').val();
-      var OD = $('#listing_OD').val();
-      var wall = $('#listing_wall').val();
-      var ID = $('#listing_dimension_ID').val();
-      var thickness = $('#listing_thickness').val();
-      var width = $('#listing_width').val();
-      var length = $('#listing_length').val();
-      var volume = eval(volume_formula);
-      alert(volume_formula+': '+volume);
-    }
+
+  
+  $("#grade_select,#listing_A,#listing_B,#listing_C,#listing_D,#listing_OD,#listing_wall,#listing_dimension_ID,#listing_thickness,#listing_width,#listing_length").change(function() {
+    calcWeight();
+  });
+  
+  $('#grades').bind("DOMSubtreeModified",function(){
+    $("#grade_select").change(function() {
+      calcWeight();
+    });
+  });
+  
+  $('#dimensions').bind("DOMSubtreeModified",function(){
+    $("#grade_select,#listing_A,#listing_B,#listing_C,#listing_D,#listing_OD,#listing_wall,#listing_dimension_ID,#listing_thickness,#listing_width,#listing_length").change(function() {
+      calcWeight();
+    });
+  });
+  
+  function calcWeight(){
+      if($('#listing_fixed_dimensions').is(':checked')){
+        var volume_formula = $('#listing_volume_formula').val();
+        var A = $('#listing_A').val();
+        var B = $('#listing_B').val();
+        var C = $('#listing_C').val();
+        var D = $('#listing_D').val();
+        var OD = $('#listing_OD').val();
+        var wall = $('#listing_wall').val();
+        var ID = $('#listing_dimension_ID').val();
+        var thickness = $('#listing_thickness').val();
+        var width = $('#listing_width').val();
+        var length = $('#listing_length').val();
+        var volume = eval(volume_formula);
+        var weight = 0;
+        var grade = $('#grade_select').val();
+        <% Grade.all.each do |grade| %>
+          if (grade==<%= grade.id%>){
+            weight=<%= grade.weight%> * volume;
+            $('#listing_weight').val(weight);
+          }
+        <% end %>
+      }
+  }
+  
+  $("#grade_select,#listing_A,#listing_B,#listing_C,#listing_D,#listing_OD,#listing_wall,#listing_dimension_ID,#listing_thickness,#listing_width,#listing_length").change(function() {
+    alert('CHANGE DIM?');
+    calcWeight();
   });
   
   
@@ -60,116 +92,181 @@ jQuery(function($) {
     </div>
   <% end %>
   
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Shape & Dimensions</h3>
+        </div>
+        <div class="panel-body">
+          <div class="col-md-5">
+            <div class="form-group">
+              <%= f.collection_select :shape_id, Shape.all, :id, :name, {prompt: "Choose a Shape"}, {class: "form-control", id: "shape_id"} %>
+            </div>
+            <div class="form-group">
+              <%= f.label :dimensions %>
+              <%= f.check_box :fixed_dimensions, {class: "form-control"} %>
+              <script>
+              $(function() {
+                $('#listing_fixed_dimensions').bootstrapToggle({
+                  on: 'Fixed',
+                  off: 'Random'
+                });
+              })
+            </script>
+            </div>
+            <div id="shapeimg">
+              <%= render :partial => 'shapeimg' %>
+            </div>
+          </div>
+          <div class="col-md-7">
+            <div id="dimensions">
+              <%= render :partial => 'dimensions' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Material</h3>
+        </div>
+        <div class="panel-body">
+          <div class="form-group">
+            <%= f.label :material_id %><br>
+            <%= f.collection_select :material_id, Material.all, :id, :name, {prompt: "Choose a Material"}, {class: "form-control", id: "material_select"} %>
+          </div>
+          <div class="form-group">
+            <%= f.label :grade_id %><br>
+            <div id="grades">
+              <%= render :partial => 'grades' %>
+            </div>
+          </div>
+          <div class="form-group" id="specification">
+            <%= f.label :specification %><br>
+            <%= f.text_field :specification, class: "form-control" %>
+          </div>
+          <div class="form-group" id="condition">
+            <%= f.label :condition %><br>
+            <%= select_tag :condition, options_for_select(conditions), class: "form-control", name: "listing[condition]" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :mill_test_report %>
+            <%= f.check_box :mill_test_report, {class: "form-control"} %>
+            <script>
+            $(function() {
+              $('#listing_mill_test_report').bootstrapToggle({
+                on: 'Yes',
+                off: 'No'
+              });
+            })
+            </script>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Price & Ordering</h3>
+        </div>
+        <div class="panel-body">
+          <%= f.label :price %><br>
+          <div id="price_per_unit" class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon">$</div>
+              <%= f.text_field :price, class: "form-control"%>
+              <div class="input-group-addon">
+                <label id="price_label">per Unit</label>
+              </div>
+            </div>
+          </div>
+          <div id="price_per_lb" class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon">$</div>
+              <%= f.text_field :price_per_lb, class: "form-control"%>
+              <div class="input-group-addon">
+                <label id="price_label">per lb</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+              <%= f.label :weight %><br>
+              <div class="input-group">
+                <%= f.text_field :weight, class: "form-control", :readonly => true %>
+                <div class="input-group-addon">lb</div>
+              </div>
+          </div>
+          
+          <div class="form-group">
+              <%= f.label :inventory %><br>
+              <%= f.text_field :inventory, class: "form-control" %>
+          </div>
+          <div class="form-group">
+              <%= f.label :minimum_quantity %><br>
+              <div class="input-group">
+                <%= f.text_field :minimum_quantity, class: "form-control" %>
+                <div class="input-group-addon">
+                  <label id="min_label">
+                    <% if @listing.fixed_dimensions %>
+                      Units
+                    <% else %>
+                      lbs
+                    <% end %>
+                  </label>
+                </div>
+              </div>
+          </div>
+          <div class="form-group">
+                <%= f.label :account_id %><br>
+                <%= f.collection_select :account_id, Account.where(:user_id => current_user), :id, :name, {prompt: "Choose a Seller Account"}, {class: "form-control", id: "account_select"} %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Listing Details</h3>
+        </div>
+        <div class="panel-body">
+          <div class="form-group">
+              <%= f.label :description %><br>
+              <%= f.text_area :description, class: "form-control" %>
+          </div>
+          <div class="form-group">
+              <%= f.label :SKU %><br>
+              <%= f.text_field :SKU, class: "form-control" %>
+          </div>
+          
+          <div class="form-group">
+              <%= f.label :image %><br>
+              <%= f.file_field :image, class: "form-control" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   
   <div class="row">
     <div class="col-md-5">
-      <div class="form-group">
-        <%= f.label :dimensions_type %>
-        <%= f.check_box :fixed_dimensions, {class: "form-control"} %>
-        <script>
-        $(function() {
-          $('#listing_fixed_dimensions').bootstrapToggle({
-            on: 'Fixed',
-            off: 'Random'
-          });
-        })
-      </script>
-      </div>
-      <div class="form-group">
-        <%= f.label :price %><br>
-        <div class="input-group">
-          <div class="input-group-addon">$</div>
-          <%= f.text_field :price, class: "form-control"%>
-          <div class="input-group-addon">
-            <label id="price_label">
-              <% if @listing.fixed_dimensions %>
-                per Unit
-              <% else %>
-                per lb
-              <% end %>
-            </label>
-          </div>
-          
-        </div>
-        </div>
-        <div class="form-group">
-          <%= f.label :mill_test_report %>
-          <%= f.check_box :mill_test_report, {class: "form-control"} %>
-          <script>
-          $(function() {
-            $('#listing_mill_test_report').bootstrapToggle({
-              on: 'Yes',
-              off: 'No'
-            });
-          })
-          </script>
-        </div>
-        <div class="form-group">
-            <%= f.label :inventory %><br>
-            <%= f.text_field :inventory, class: "form-control" %>
-        </div>
-        <div class="form-group">
-            <%= f.label :minimum_quantity %><br>
-            <div class="input-group">
-              <%= f.text_field :minimum_quantity, class: "form-control" %>
-              <div class="input-group-addon">
-                <label id="min_label">
-                  <% if @listing.fixed_dimensions %>
-                    Units
-                  <% else %>
-                    lbs
-                  <% end %>
-                </label>
-              </div>
-            </div>
-        </div>
+      
+      
     </div>
     <div class="col-md-5">
-      <div class="form-group">
-          <%= f.label :material_id %><br>
-          <%= f.collection_select :material_id, Material.all, :id, :name, {prompt: "Choose a Material"}, {class: "form-control", id: "material_select"} %>
-      </div>
       
-      
-        <div class="form-group">
-          <%= f.label :grade_id %><br>
-          <div id="grades">
-            <%= render :partial => 'grades' %>
-          </div>
-        </div>
         
-      <div class="form-group" id="specification">
-        <%= f.label :specification %><br>
-        <%= f.text_field :specification, class: "form-control" %>
-      </div>
-        <div class="form-group">
-          <%= f.label :shape_id %><br>
-          <%= f.collection_select :shape_id, Shape.all, :id, :name, {prompt: "Choose a Shape"}, {class: "form-control", id: "shape_id"} %>
-        </div>
-        <div id="dimensions">
-          <%= render :partial => 'dimensions' %>
-        </div>
      </div> 
   </div>
   <div class="row">
     <div class="col-md-10">
-    <div class="form-group">
-        <%= f.label :description %><br>
-        <%= f.text_area :description, class: "form-control" %>
-    </div>
-    <div class="form-group">
-        <%= f.label :SKU %><br>
-        <%= f.text_field :SKU, class: "form-control" %>
-    </div>
     
-    <div class="form-group">
-        <%= f.label :image %><br>
-        <%= f.file_field :image, class: "form-control" %>
-    </div>
-    <div class="form-group">
-          <%= f.label :account_id %><br>
-          <%= f.collection_select :account_id, Account.where(:user_id => current_user), :id, :name, {prompt: "Choose a Seller Account"}, {class: "form-control", id: "account_select"} %>
-    </div>
+    
     <div class="form-group">
       <%= f.submit class: "btn btn-primary" %>
     </div>

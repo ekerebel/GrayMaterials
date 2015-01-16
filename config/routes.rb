@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   
   match 'listings/update_grade_select/:id', :controller=>'listings', :via => [:get], :action => 'update_grade_select'
   match 'listings/update_shape_select/:shape/:fixed_dimensions', :controller=>'listings', :via => [:get], :action => 'update_shape_select'
+  match 'listings/update_shape_image/:shape/:fixed_dimensions', :controller=>'listings', :via => [:get], :action => 'update_shape_image'
   
   resources :orders
   get 'pages/about'
