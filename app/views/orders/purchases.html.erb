@@ -1,31 +1,42 @@
-<table width="100%">
-  <tr>
-    <td>
-      <h1>Your Purchase History</h1>
-    </td>
-      
-  </tr>
-</table>
-
-
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th class="center">Item</th>
-      <th class="center">Price</th>
-      <th class="center">Seller</th>
-      <th class="center">Date Purchased</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @orders.each do |order| %>
+<div class= "row">
+  <div class="col-xs-3">
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <%= render 'layouts/admin_menu' %>
+        </ul>
+    </div>
+  </div>
+  <div class= "col-xs-9">
+    <table width="100%">
       <tr>
-        <td><%= link_to order.listing.name, order.listing, class: "btn btn-link" %></td>
-        <td><%= number_to_currency(order.listing.price) %></td>
-        <td><%= order.seller.name %></td>
-        <td><%= order.created_at.strftime("%b %-d, %Y") %></td>
+        <td>
+          <h1>Your Purchase History</h1>
+        </td>
+          
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </table>
+    
+    
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th class="center">Item</th>
+          <th class="center">Price</th>
+          <th class="center">Seller</th>
+          <th class="center">Date Purchased</th>
+        </tr>
+      </thead>
+    
+      <tbody>
+        <% @orders.each do |order| %>
+          <tr>
+            <td><%= link_to order.listing.name, order.listing, class: "btn btn-link" %></td>
+            <td><%= number_to_currency(order.listing.price) %></td>
+            <td><%= order.seller.name %></td>
+            <td><%= order.created_at.strftime("%b %-d, %Y") %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

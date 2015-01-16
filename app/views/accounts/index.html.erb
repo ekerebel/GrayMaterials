@@ -1,42 +1,52 @@
-<table width="100%">
-  <tr>
-    <td>
-      <h1>My Seller Accounts</h1>
-    </td>
-    <td align="right">
-      <form action="accounts/new">
-        <input type="submit" class="btn btn-primary" value="New Account", data: {no_turbolink: true}>
-      </form>
-    </td>  
-  </tr>
-</table>
-
-
-
-
-    <div class="row">
-      <% @accounts.each do |account| %>
-        <div class="col-md-12">
-          <div class="thumbnail">
-            <table width="100%">
-              <tr>
-                <td>
-                  <%= account.name %><br>
-                  <%= account.address1%><br>
-                  <% if account.address2!='' %>
-                    <%= account.address2%><br>
-                  <% end %>
-                  <%= account.city%>, <%= account.state%> <%= account.zip_code%><br>
-                  <small><small><i>Recipient Account: <%= account.recipient%></i></small></small>
-                </td>
-                <td align="right" valign="bottom">
-                  <%= link_to 'Destroy', account, method: :delete, data: { confirm: 'Are you sure?'} %>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      <% end %>
+<div class= "row">
+  <div class="col-xs-3">
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <%= render 'layouts/admin_menu' %>
+        </ul>
     </div>
-
-
+  </div>
+  <div class= "col-xs-9">
+    <table width="100%">
+      <tr>
+        <td>
+          <h1>My Seller Accounts</h1>
+        </td>
+        <td align="right">
+          <form action="accounts/new">
+            <input type="submit" class="btn btn-primary" value="New Account", data: {no_turbolink: true}>
+          </form>
+        </td>  
+      </tr>
+    </table>
+    
+    
+    
+    
+        <div class="row">
+          <% @accounts.each do |account| %>
+            <div class="col-md-12">
+              <div class="thumbnail">
+                <table width="100%">
+                  <tr>
+                    <td>
+                      <%= account.name %><br>
+                      <%= account.address1%><br>
+                      <% if account.address2!='' %>
+                        <%= account.address2%><br>
+                      <% end %>
+                      <%= account.city%>, <%= account.state%> <%= account.zip_code%><br>
+                      <small><small><i>Recipient Account: <%= account.recipient%></i></small></small>
+                    </td>
+                    <td align="right" valign="bottom">
+                      <%= link_to 'Destroy', account, method: :delete, data: { confirm: 'Are you sure?'} %>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          <% end %>
+        </div>
+    </div>
+</div>
+    
