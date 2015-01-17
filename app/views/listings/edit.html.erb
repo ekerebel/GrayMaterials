@@ -1,6 +1,15 @@
-<h1>Editing listing</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Show', @listing, class: "btn btn-link" %> |
-<%= link_to 'Back', listings_path, class: "btn btn-link" %>
+<div class= "row">
+  <div class="col-md-2">
+    <div class="bs-docs-sidebar hidden-print hidden-xs hidden-sm" id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <%= render 'layouts/admin_menu' %>
+        </ul>
+    </div>
+  </div>
+  <div class= "col-md-10">
+        <%= render 'form' %>
+        
+        <%= link_to 'Show', @listing, class: "btn btn-link" %> |
+        <%= link_to 'Back', listings_path, class: "btn btn-link" %>
+    </div>
+</div>

@@ -1,6 +1,15 @@
-<h1>Editing account</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Show', @account %> |
-<%= link_to 'Back', accounts_path %>
+<div class= "row">
+  <div class="col-md-2">
+    <div class="bs-docs-sidebar hidden-print hidden-xs hidden-sm" id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <%= render 'layouts/admin_menu' %>
+        </ul>
+    </div>
+  </div>
+  <div class= "col-md-10">
+        <%= render 'form' %>
+        
+        <%= link_to 'Show', @account %> |
+        <%= link_to 'Back', accounts_path %>
+    </div>
+</div>

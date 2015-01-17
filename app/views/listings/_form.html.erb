@@ -95,40 +95,6 @@ jQuery(function($) {
     <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Shape & Dimensions</h3>
-        </div>
-        <div class="panel-body">
-          <div class="col-md-5">
-            <div class="form-group">
-              <%= f.collection_select :shape_id, Shape.all, :id, :name, {prompt: "Choose a Shape"}, {class: "form-control", id: "shape_id"} %>
-            </div>
-            <div class="form-group">
-              <%= f.label :dimensions %>
-              <%= f.check_box :fixed_dimensions, {class: "form-control"} %>
-              <script>
-              $(function() {
-                $('#listing_fixed_dimensions').bootstrapToggle({
-                  on: 'Fixed',
-                  off: 'Random'
-                });
-              })
-            </script>
-            </div>
-            <div id="shapeimg">
-              <%= render :partial => 'shapeimg' %>
-            </div>
-          </div>
-          <div class="col-md-7">
-            <div id="dimensions">
-              <%= render :partial => 'dimensions' %>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="panel panel-default">
-        <div class="panel-heading">
           <h3 class="panel-title">Material</h3>
         </div>
         <div class="panel-body">
@@ -151,7 +117,7 @@ jQuery(function($) {
             <%= select_tag :condition, options_for_select(conditions), class: "form-control", name: "listing[condition]" %>
           </div>
           <div class="form-group">
-            <%= f.label :mill_test_report %>
+            <%= f.label :mill_test_report_available %>
             <%= f.check_box :mill_test_report, {class: "form-control"} %>
             <script>
             $(function() {
@@ -161,6 +127,40 @@ jQuery(function($) {
               });
             })
             </script>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Shape & Dimensions</h3>
+        </div>
+        <div class="panel-body">
+          <div class="col-md-5">
+            <div class="form-group">
+              <%= f.collection_select :shape_id, Shape.all, :id, :name, {prompt: "Choose a Shape"}, {class: "form-control", id: "shape_id"} %>
+            </div>
+            <div id="shapeimg">
+              <%= render :partial => 'shapeimg' %>
+            </div>
+            <div class="form-group">
+              <%= f.label :dimensions %>
+              <%= f.check_box :fixed_dimensions, {class: "form-control"} %>
+              <script>
+              $(function() {
+                $('#listing_fixed_dimensions').bootstrapToggle({
+                  on: 'Fixed',
+                  off: 'Random'
+                });
+              })
+            </script>
+            </div>
+          </div>
+          <div class="col-md-7">
+            <div id="dimensions">
+              <%= render :partial => 'dimensions' %>
+            </div>
           </div>
         </div>
       </div>
@@ -197,7 +197,7 @@ jQuery(function($) {
               <%= f.label :weight %><br>
               <div class="input-group">
                 <%= f.text_field :weight, class: "form-control", :readonly => true %>
-                <div class="input-group-addon">lb</div>
+                <div class="input-group-addon">lbs</div>
               </div>
           </div>
           
